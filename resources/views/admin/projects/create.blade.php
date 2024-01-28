@@ -2,6 +2,8 @@
 
 @section('content')
     <div class="container mt-5">
+      <a class="btn btn-success" href="{{ route('admin.projects.index') }}">&LeftArrow; Back</a>
+
       <h2 class="text-center">Insert a new Projects</h2>
 
       <form class="mt-5" action="{{ route('admin.projects.store') }}" method="POST">
@@ -17,13 +19,17 @@
         </div>
 
         {{-- types --}}
-        <div class="mb-3">
+        <div class="mb-3 has-validation">
           <label for="type">Select Type</label>
-          <select class="form-select" name="type_id" id="type">
-            <option value="">No type</option>
+          <select class="form-select @error('type_id') is-invalid @enderror" name="type_id" id="type">
+            <option @selected(old('type_id') == null) value="">No type</option>
             @foreach ( $types as $type)
-              <option value="{{ $type->id }}">{{$type->name}}</option>
+              <option @selected(old('type_id') == $type->id) value="{{ $type->id }}">{{$type->name}}</option>
             @endforeach
+
+            @error('type_id')
+              <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
           </select>
         </div>
 

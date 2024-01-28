@@ -19,14 +19,18 @@
         @enderror
       </div>
 
-      <div class="mb-3">
+      <div class="mb-3 has-validation">
         <label for="type">Select Type</label>
-        <select class="form-select" name="type_id" id="type">
-          <option @selected(!$project->type_id) value="">No Type</option>
+        <select class="form-select @error('type_id') is-invalid @enderror" name="type_id" id="type">
+          <option @selected(!old('type_id', $project->type_id)) value="">No Type</option>
 
           @foreach ($types as $type)
-              <option @selected($project->type_id == $type->id) value="{{ $type->id }}">{{ $type->name }}</option>
+            <option @selected(old('type_id', $project->type_id) == $type->id) value="{{ $type->id }}">{{ $type->name }}</option>
           @endforeach
+
+          @error('type_id')
+            <div class="invalid-feedback">{{ $message }}</div>
+          @enderror
         </select>
       </div>
 

@@ -22,7 +22,7 @@
         <div class="mb-3 has-validation">
           <label for="type">Select Type</label>
           <select class="form-select @error('type_id') is-invalid @enderror" name="type_id" id="type">
-            <option @selected(old('type_id') == null) value="">No type</option>
+            <option @selected(!old('type_id')) value="">No type</option>
             @foreach ( $types as $type)
               <option @selected(old('type_id') == $type->id) value="{{ $type->id }}">{{$type->name}}</option>
             @endforeach

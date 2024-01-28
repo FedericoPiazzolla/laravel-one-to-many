@@ -3,11 +3,8 @@
 @section('content')
 
   <div class="container-mt-5">
-    <div class="d-flex justify-content-between my-5">
-      <h2 class="flex-grow-1">Edit Page</h2>
-      <a class="btn btn-success" href="{{ route('admin.projects.edit', ['project' => $project->slug]) }}">Back to Originial Project</a>
-    </div>
-    
+    <a class="my-5 btn btn-success" href="{{ route('admin.projects.index') }}">&LeftArrow; back</a>
+    <h2 class="flex-grow-1">Edit Page</h2>
 
     <form action="{{ route('admin.projects.update', ['project' => $project->slug]) }}" method="POST">
       @csrf
@@ -20,6 +17,17 @@
         @error('title')
           <div class="invalid-feedback">{{ $message }}</div>
         @enderror
+      </div>
+
+      <div class="mb-3">
+        <label for="type">Select Type</label>
+        <select class="form-select" name="type_id" id="type">
+          <option @selected(!$project->type_id) value="">No Type</option>
+
+          @foreach ($types as $type)
+              <option @selected($project->type_id == $type->id) value="{{ $type->id }}">{{ $type->name }}</option>
+          @endforeach
+        </select>
       </div>
 
       <div class="mb-3">
